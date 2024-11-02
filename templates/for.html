@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Diamond Price Predictor</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f5f5f5;
+        margin: 0;
+        padding: 0;
+      }
+
+      header {
+        background-color: #8ab2a4;
+        padding: 20px;
+        text-align: center;
+      }
+
+      header h1 {
+        color: rgb(4, 95, 49);
+        margin: 0;
+        font-size: 2em;
+        font-weight: bold;
+        animation: fadeInDown 1.5s ease-out;
+      }
+
+      .container {
+        width: 50%;
+        margin: 40px auto;
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        animation: fadeInUp 1.5s ease-out;
+      }
+
+      h2 {
+        text-align: center;
+        color: #333;
+        color:#064e35;
+        animation: fadeIn 1.5s ease-out;
+      }
+
+      .form-group {
+        margin: 15px 0;
+        text-align: center;
+        animation: fadeIn 2s ease-out;
+      }
+
+      label {
+        display: block;
+        font-size: 1.1em;
+        margin-bottom: 5px;
+        color: #555;
+      }
+
+      input[type="text"],
+      select {
+        width: 80%;
+        padding: 10px;
+        font-size: 1em;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        transition: all 0.3s ease;
+      }
+
+      input[type="text"]:focus,
+      select:focus {
+        outline: none;
+        border-color: #8ab2a4;
+        transform: scale(1.05);
+      }
+
+      input[type="submit"] {
+        background-color: #8ab2a4;
+        color: white;
+        padding: 10px 20px;
+        font-size: 1.2em;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-top: 20px;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+      }
+
+      input[type="submit"]:hover {
+        background-color: #759b8b;
+        transform: scale(1.1);
+      }
+
+      /* Styling for the result box */
+      .result-box {
+        margin-top: 30px;
+        padding: 20px;
+        border: 2px solid #8ab2a4;
+        border-radius: 10px;
+        background-color: #f9f9f9;
+        text-align: center;
+        color: #333;
+        font-size: 1.2em;
+        animation: fadeIn 2s ease-out;
+      }
+
+      /* Animation Keyframes */
+      @keyframes fadeIn {
+        0% {
+          opacity: 0;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+
+      @keyframes fadeInDown {
+        0% {
+          opacity: 0;
+          transform: translateY(-20px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes fadeInUp {
+        0% {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <h1>Diamond Price Predictor</h1>
+    </header>
+
+    <div class="container">
+      <h2>Enter Diamond Details</h2>
+      <form action="{{url_for('predict_datapoint')}}" method="POST">
+        <div class="form-group">
+          <label for="carat">Carat:</label>
+          <input
+            type="text"
+            id="carat"
+            name="carat"
+            placeholder="Enter carat value (float)"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="depth">Depth:</label>
+          <input
+            type="text"
+            id="depth"
+            name="depth"
+            placeholder="Enter depth value (float)"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="table">Table:</label>
+          <input
+            type="text"
+            id="table"
+            name="table"
+            placeholder="Enter table value (float)"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="x">x:</label>
+          <input type="text" id="x" name="x" placeholder="Enter x value (float)" />
+        </div>
+
+        <div class="form-group">
+          <label for="y">y:</label>
+          <input type="text" id="y" name="y" placeholder="Enter y value (float)" />
+        </div>
+
+        <div class="form-group">
+          <label for="z">z:</label>
+          <input type="text" id="z" name="z" placeholder="Enter z value (float)" />
+        </div>
+
+        <div class="form-group">
+          <label for="cut">Cut:</label>
+          <select id="cut" name="cut">
+            <option value="Fair">Fair</option>
+            <option value="Good">Good</option>
+            <option value="Very Good">Very Good</option>
+            <option value="Premium">Premium</option>
+            <option value="Ideal">Ideal</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="color">Color:</label>
+          <select id="color" name="color">
+            <option value="D">D</option>
+            <option value="E">E</option>
+            <option value="F">F</option>
+            <option value="G">G</option>
+            <option value="H">H</option>
+            <option value="I">I</option>
+            <option value="J">J</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="clarity">Clarity:</label>
+          <select id="clarity" name="clarity">
+            <option value="I1">I1</option>
+            <option value="SI2">SI2</option>
+            <option value="SI1">SI1</option>
+            <option value="VS2">VS2</option>
+            <option value="VS1">VS1</option>
+            <option value="VVS2">VVS2</option>
+            <option value="VVS1">VVS1</option>
+            <option value="IF">IF</option>
+          </select>
+        </div>
+
+        <input type="submit" value="Submit" />
+      </form>
+
+      <!-- Final Result Box -->
+      <div class="result-box">
+        {{final_result}}
+      </div>
+    </div>
+  </body>
+</html>

@@ -5,11 +5,7 @@ from src.exception import CustomException
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from dataclasses import dataclass
-import sys
-import os
 
-# Add the project root directory to the Python path
-sys.path.append(os.path.join(os.getcwd(), 'src'))
 
 
 
